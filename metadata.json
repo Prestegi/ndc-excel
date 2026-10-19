@@ -1,0 +1,6 @@
+{
+  "name": "NDC Scanner - Agent Data Extraction & Excel Export",
+  "description": "Production web application to batch upload handwritten NDC Agent Data Collection Forms, extract person records and passport photos with AI OCR, review results, and export formatted Excel workbooks with embedded images.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

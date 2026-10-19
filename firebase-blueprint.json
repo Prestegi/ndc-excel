@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "Batch": {
+      "title": "Batch",
+      "description": "A collection of scanned form pages submitted for OCR extraction and data processing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "totalPages": { "type": "number" },
+        "processedPages": { "type": "number" },
+        "status": { "type": "string", "enum": ["queued", "processing", "completed", "failed"] },
+        "stats": { "type": "object" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "totalPages", "status", "createdAt"]
+    },
+    "PersonRecord": {
+      "title": "PersonRecord",
+      "description": "An extracted NDC agent record from a section of a scanned data collection form.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "batchId": { "type": "string" },
+        "userId": { "type": "string" },
+        "pageNumber": { "type": "number" },
+        "sectionIndex": { "type": "number" },
+        "name": { "type": "string" },
+        "membershipNo": { "type": "string" },
+        "ward": { "type": "string" },
+        "pollingUnit": { "type": "string" },
+        "phoneNo": { "type": "string" },
+        "votersCardNo": { "type": "string" },
+        "passportPhotoUrl": { "type": "string" },
+        "hasPassportPhoto": { "type": "boolean" },
+        "state": { "type": "string" },
+        "lga": { "type": "string" },
+        "collationAgentRole": { "type": "string" },
+        "reviewStatus": { "type": "string", "enum": ["needs_review", "approved", "flagged"] },
+        "flags": { "type": "array" },
+        "correctionHistory": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "batchId", "userId", "name", "reviewStatus", "createdAt"]
+    },
+    "ReviewLog": {
+      "title": "ReviewLog",
+      "description": "Audit trail log of edits and approvals made by verified users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "recordId": { "type": "string" },
+        "userId": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "recordId", "userId", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/batches/{batchId}": {
+      "schema": "Batch",
+      "description": "Batches of scanned agent collection form pages."
+    },
+    "/personRecords/{recordId}": {
+      "schema": "PersonRecord",
+      "description": "Individual extracted NDC agent candidate records with photos and review states."
+    },
+    "/reviewLogs/{logId}": {
+      "schema": "ReviewLog",
+      "description": "Audit trails for field adjustments, reviewer approvals, and missing information confirmations."
+    }
+  }
+}
